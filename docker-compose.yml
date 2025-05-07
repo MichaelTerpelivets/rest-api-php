@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/var/www
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: market
+      POSTGRES_USER: john
+      POSTGRES_PASSWORD: qwerty123
+    ports:
+      - "5432:5432"
