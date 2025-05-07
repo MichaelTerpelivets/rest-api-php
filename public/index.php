@@ -1,9 +1,43 @@
 <?php
 
+
+declare(strict_types=1);
+
+header('Content-Type: application/json');
+
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+
+set_exception_handler(function (Throwable $e) {
+    http_response_code(500);
+    echo json_encode([
+        'error' => 'Internal Server Error',
+        'message' => $e->getMessage(),
+    ]);
+});
+
+set_error_handler(function ($severity, $message, $file, $line) {
+    http_response_code(500);
+    echo json_encode([
+        'error' => 'Runtime Error',
+        'message' => $message,
+        'file' => $file,
+        'line' => $line,
+    ]);
+});
+
+register_shutdown_function(function () {
+    $error = error_get_last();
+    if ($error !== null) {
+        http_response_code(500);
+        echo json_encode([
+            'error' => 'Fatal Error',
+            'message' => $error['message'],
+        ]);
+    }
+});
 
 $dispatcher = require __DIR__ . '/../routes/api.php';
 
