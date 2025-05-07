@@ -93,11 +93,11 @@ bash curl -X POST -H "Content-Type: application/json"
 
 bash curl -X PATCH -H "Content-Type: application/json"
 -d '{"name": "Updated Product Name"}'
-[http://localhost:8000/products/1](http://localhost:8000/products/1)
+[http://localhost:8000/products/{uuid}](http://localhost:8000/products/{uuid})
 
 #### 4. Видалення продукту:
 
-bash curl -X DELETE [http://localhost:8000/products/1](http://localhost:8000/products/1)
+bash curl -X DELETE [http://localhost:8000/products/1](http://localhost:8000/products/{uuid})
 
 ## Запуск проекту в кілька кроків
 
